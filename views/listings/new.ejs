@@ -24,8 +24,8 @@
           </div> -->
 
           <div class="mb-3">
-            <label for="image" class="form-label">Upload Listing Image</label>
-            <input name="listing[image]"  type="file" class="form-control"  required/>
+            <label for="image" class="form-label">Upload Listing Images <small class="text-muted">(max 5)</small></label>
+            <input name="listing[images]" type="file" class="form-control" multiple required/>
           </div>
 
           <div class="row">
@@ -47,6 +47,21 @@
             <label for="location" class="form-label">Location</label>
             <input name="listing[location]" placeholder="enter location" type="text" class="form-control" required />
             <div class="invalid-feedback">please enter the location</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select name="listing[category]" class="form-control">
+              <option value="">Select a category</option>
+              <option value="trending">Trending</option>
+              <option value="rooms">Rooms</option>
+              <option value="iconic cities">Iconic Cities</option>
+              <option value="mountains">Mountains</option>
+              <option value="pools">Pools</option>
+              <option value="farms">Farms</option>
+              <option value="castles">Castles</option>
+              <option value="camping">Camping</option>
+            </select>
           </div>
           <br /><br />
           <button class="btn btn-dark add-btn">Add</button>

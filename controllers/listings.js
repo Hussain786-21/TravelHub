@@ -41,13 +41,11 @@ module.exports.createlisting = async (req, res, next) => {
   let response = await geocodingClient.forwardGeocode({
     query: req.body.listing.location,
     limit: 1
-  })
-    .send()
-  let url = req.file.path;
-  let filename = req.file.filename;
+  }).send();
+  const images = req.files.map(f => ({ url: f.path, filename: f.filename }));
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
-  newListing.image = { url, filename };
+  newListing.images = images;
   newListing.geometry = response.body.features[0].geometry;
   await newListing.save();
   req.flash("success", "New listing was created!");
@@ -61,20 +59,21 @@ module.exports.editlisting = async (req, res) => {
     req.flash("error", "Listing you requested for does not exist!");
     return res.redirect("/listings");
   }
-  let originalimageurl = listing.image.url;
-  originalimageurl = originalimageurl.replace("/upload", "/upload/w_250");
-  res.render("listings/edit.ejs", { listing, originalimageurl });
+  let originalimages = listing.images.map(img => ({
+    url: img.url.replace("/upload", "/upload/w_250"),
+    filename: img.filename
+  }));
+  res.render("listings/edit.ejs", { listing, originalimages });
 };
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
   let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-  if (typeof req.file !== "undefined") {
-    let url = req.file.path;
-    let filename = req.file.filename;
-    listing.image = { url, filename };
+  if (req.files && req.files.length > 0) {
+    const newImages = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    listing.images.push(...newImages);
     await listing.save();
-  };
+  }
   req.flash("success", "Listing was updated!");
   res.redirect(`/listings/${id}`);
 };

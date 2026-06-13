@@ -18,13 +18,17 @@
           </div>
 
           <div class="mb-3">
-           Original Listing Image <br/>
-           <img src="<%= originalimageurl %>" />
+            Current Images <br/>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <% originalimages.forEach(img => { %>
+                <img src="<%= img.url %>" style="height:80px; border-radius:8px;" />
+              <% }) %>
+            </div>
           </div>
 
           <div class="mb-3">
-            <label for="image" class="form-label">Upload new Image</label>
-            <input name="listing[image]"  type="file" class="form-control"  />
+            <label for="image" class="form-label">Upload New Images <small class="text-muted">(max 5, adds to existing)</small></label>
+            <input name="listing[images]" type="file" class="form-control" multiple />
           </div>
 
           <div class="row">
@@ -44,6 +48,21 @@
             <label for="location" class="form-label">Location</label>
             <input name="listing[location]" value="<%= listing.location %>" type="text" class="form-control" required/>
             <div class="invalid-feedback">please enter the valid location</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select name="listing[category]" class="form-control">
+              <option value="">Select a category</option>
+              <option value="trending" <%= listing.category === 'trending' ? 'selected' : '' %>>Trending</option>
+              <option value="rooms" <%= listing.category === 'rooms' ? 'selected' : '' %>>Rooms</option>
+              <option value="iconic cities" <%= listing.category === 'iconic cities' ? 'selected' : '' %>>Iconic Cities</option>
+              <option value="mountains" <%= listing.category === 'mountains' ? 'selected' : '' %>>Mountains</option>
+              <option value="pools" <%= listing.category === 'pools' ? 'selected' : '' %>>Pools</option>
+              <option value="farms" <%= listing.category === 'farms' ? 'selected' : '' %>>Farms</option>
+              <option value="castles" <%= listing.category === 'castles' ? 'selected' : '' %>>Castles</option>
+              <option value="camping" <%= listing.category === 'camping' ? 'selected' : '' %>>Camping</option>
+            </select>
           </div>
           <button class="btn btn-dark edit-btn mb-3">Edit</button>
         </form>

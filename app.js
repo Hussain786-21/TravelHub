@@ -1,8 +1,6 @@
-if(process.env.NODE_ENV != "production")
-{
+if(process.env.NODE_ENV != "production") {
   require('dotenv').config();
 }
-console.log(process.env.SECRET);
 
 
 const express = require("express");
@@ -11,7 +9,6 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsmate  = require("ejs-mate");
-const Review = require("./models/review.js");
 const listingsrouter  = require("./routes/listing.js");
 const reviewsrouter = require("./routes/review.js");
 const Userrouter = require("./routes/user.js");
@@ -34,7 +31,10 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(dburl);
+  await mongoose.connect(dburl, {
+    tls: true,
+    tlsAllowInvalidCertificates: false,
+  });
 }
 
 app.set("view engine", "ejs");
@@ -47,11 +47,11 @@ const expresserror = require("./utils/expresserror.js");
 
 
 
+const secret = process.env.SESSION_SECRET || "fallbacksecret";
+
 const store = MongoStore.create({
   mongoUrl: dburl,
-  crypto: {
-    secret: "mysupersecretcode",
-  },
+  crypto: { secret },
   touchAfter: 24 * 3600,
 });
 
@@ -61,7 +61,7 @@ store.on("error", (e) => {
 
 const sessionOptions = {
   store,
-  secret : "mysupersecretcode",
+  secret,
   resave : false,
   saveUninitialized : true,
   cookie : {
@@ -96,6 +96,10 @@ app.use((req, res, next) => {
 //   res.send(registereduser);
 // });
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
 app.use("/", Userrouter);
 app.use("/listings", listingsrouter);
 app.use("/listings/:id/reviews", reviewsrouter);
@@ -107,7 +111,10 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
   let {statusCode = 500, message = "Something went wrong!"} = err;
-  res.status(statusCode).render("error.ejs",{message});
+  res.locals.curruser = req.user;
+  res.locals.success = "";
+  res.locals.error = "";
+  res.status(statusCode).render("error.ejs", { message });
 });
 
 app.listen(8080, () => {
