@@ -50,7 +50,7 @@ const expresserror = require("./utils/expresserror.js");
 const store = MongoStore.create({
   mongoUrl: dburl,
   crypto: {
-    secret: process.env.SESSION_SECRET,
+    secret: "mysupersecretcode",
   },
   touchAfter: 24 * 3600,
 });
@@ -61,7 +61,7 @@ store.on("error", (e) => {
 
 const sessionOptions = {
   store,
-  secret : process.env.SESSION_SECRET,
+  secret : "mysupersecretcode",
   resave : false,
   saveUninitialized : true,
   cookie : {

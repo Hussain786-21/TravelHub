@@ -117,6 +117,33 @@ body {
 }
 
 #map {
-    height : 300px;
-    width: 100vh;
+    height: 300px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .show-img {
+        height: 22vh;
+    }
+
+    .btns {
+        flex-direction: row;
+        gap: 0.5rem;
+        padding-left: 1rem;
+    }
+
+    .tax-toggle {
+        margin-left: 1rem !important;
+        margin-top: 1rem;
+    }
+
+    #filters {
+        overflow-x: auto;
+        flex-wrap: nowrap !important;
+    }
+
+    .filter {
+        min-width: 60px;
+        margin-right: 1rem !important;
+    }
 }

@@ -14,15 +14,6 @@ router.route("/login")
     .get(usercontroller.renderloginform)
     .post(saveRedirectUrl, passport.authenticate("local", { failureRedirect: "/login", failureFlash: true }),usercontroller.login);
 
-// router.get("/signup", usercontroller.rendersignupform);
-
-// router.post("/signup", wrapAsyc(usercontroller.signup));
-
-// router.get("/login", usercontroller.renderloginform);
-
-// router.post("/login", saveRedirectUrl, passport.authenticate("local", { failureRedirect: "/login", failureFlash: true }),
-//     usercontroller.login);
-
 router.get("/logout", usercontroller.logout);
 
 module.exports = router;

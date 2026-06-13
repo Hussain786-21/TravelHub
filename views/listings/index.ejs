@@ -19,6 +19,9 @@
         opacity: 1;
         cursor: pointer;
       }
+      .active-filter {
+        opacity: 1;
+      }
 
       .tax-toggle {
         border: 1px solid black;
@@ -41,16 +44,8 @@
           display: none;
         }
       }
-      .active-filter {
-        opacity: 1;
-      }
-      #filters a {
-        text-decoration: none;
-        color: inherit;
-      }
-      #filters a:focus, #filters a:active {
-        outline: none;
-        text-decoration: none;
+      .tax-info {
+        display: none;
       }
       
       .listing-link .card-text {
@@ -59,54 +54,37 @@
 
     </style>
     <div id="filters">
-      <a href="/listings?category=trending" style="text-decoration:none; color:inherit;">
-        <div class="filter <%= category === 'trending' ? 'active-filter' : '' %>">
-          <div><i class="fa-solid fa-fire"></i></div>
-          <p>Trending</p>
-        </div>
-      </a>
-      <a href="/listings?category=rooms" style="text-decoration:none; color:inherit;">
-        <div class="filter <%= category === 'rooms' ? 'active-filter' : '' %>">
-          <div><i class="fa-solid fa-bed"></i></div>
-          <p>Rooms</p>
-        </div>
-      </a>
-      <a href="/listings?category=iconic cities" style="text-decoration:none; color:inherit;">
-        <div class="filter <%= category === 'iconic cities' ? 'active-filter' : '' %>">
-          <div><i class="fa-solid fa-mountain-city"></i></div>
-          <p>Iconic cities</p>
-        </div>
-      </a>
-      <a href="/listings?category=mountains" style="text-decoration:none; color:inherit;">
-        <div class="filter <%= category === 'mountains' ? 'active-filter' : '' %>">
-          <div><i class="fa-solid fa-mountain"></i></div>
-          <p>Mountains</p>
-        </div>
-      </a>
-      <a href="/listings?category=pools" style="text-decoration:none; color:inherit;">
-        <div class="filter <%= category === 'pools' ? 'active-filter' : '' %>">
-          <div><i class="fa-solid fa-person-swimming"></i></div>
-          <p>Pools</p>
-        </div>
-      </a>
-      <a href="/listings?category=farms" style="text-decoration:none; color:inherit;">
-        <div class="filter <%= category === 'farms' ? 'active-filter' : '' %>">
-          <div><i class="fa-solid fa-building-wheat"></i></div>
-          <p>Farms</p>
-        </div>
-      </a>
-      <a href="/listings?category=castles" style="text-decoration:none; color:inherit;">
-        <div class="filter <%= category === 'castles' ? 'active-filter' : '' %>">
-          <div><i class="fa-brands fa-fort-awesome"></i></div>
-          <p>Castles</p>
-        </div>
-      </a>
-      <a href="/listings?category=camping" style="text-decoration:none; color:inherit;">
-        <div class="filter <%= category === 'camping' ? 'active-filter' : '' %>">
-          <div><i class="fa-solid fa-tent"></i></div>
-          <p>Camping</p>
-        </div>
-      </a>
+      <div class="filter <%= category === 'trending' ? 'active-filter' : '' %>" onclick="window.location='/listings?category=trending'">        <div><i class="fa-solid fa-fire"></i></div>
+        <p>Trending</p>
+      </div>
+      <div class="filter <%= category === 'rooms' ? 'active-filter' : '' %>" onclick="window.location='/listings?category=rooms'">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <p>Rooms</p>
+      </div>
+      <div class="filter <%= category === 'iconic cities' ? 'active-filter' : '' %>" onclick="window.location='/listings?category=iconic cities'">
+        <div><i class="fa-solid fa-mountain-city"></i></div>
+        <p>Iconic cities</p>
+      </div>
+      <div class="filter <%= category === 'mountains' ? 'active-filter' : '' %>" onclick="window.location='/listings?category=mountains'">
+        <div><i class="fa-solid fa-mountain"></i></div>
+        <p>Mountains</p>
+      </div>
+      <div class="filter <%= category === 'pools' ? 'active-filter' : '' %>" onclick="window.location='/listings?category=pools'">
+        <div><i class="fa-solid fa-person-swimming"></i></div>
+        <p>Pools</p>
+      </div>
+      <div class="filter <%= category === 'farms' ? 'active-filter' : '' %>" onclick="window.location='/listings?category=farms'">
+        <div><i class="fa-solid fa-building-wheat"></i></div>
+        <p>Farms</p>
+      </div>
+      <div class="filter <%= category === 'castles' ? 'active-filter' : '' %>" onclick="window.location='/listings?category=castles'">
+        <div><i class="fa-brands fa-fort-awesome"></i></div>
+        <p>Castles</p>
+      </div>
+      <div class="filter <%= category === 'camping' ? 'active-filter' : '' %>" onclick="window.location='/listings?category=camping'">
+        <div><i class="fa-solid fa-tent"></i></div>
+        <p>Camping</p>
+      </div>
       <div class="tax-toggle">
         <div class="form-check form-switch form-check-reverse">
           <input class="form-check-input" type="checkbox" id="switchCheckReverse">
@@ -142,7 +120,7 @@
         let taxinfo = document.getElementsByClassName("tax-info");
         for(info of taxinfo)
         {
-          if(info.style.display != "inline")
+          if(info.style.display === "none")
           {
             info.style.display = "inline";
           }
@@ -153,12 +131,6 @@
         }
       });
     </script>
-
-
-
-
-
-
 
      <!-- <ul>
     //   <% for(let listing of allListings) { %>
